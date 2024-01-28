@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.conf.urls.static import static
 from django.urls import path
@@ -21,9 +22,13 @@ from django.conf import settings
 from transactions.views import document_download_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('download/<int:document_id>/', document_download_view, name='document_download'),
+    path("admin/", admin.site.urls),
+    path(
+        "download/<int:document_id>/", document_download_view, name="document_download"
+    ),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0])
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]
+    )

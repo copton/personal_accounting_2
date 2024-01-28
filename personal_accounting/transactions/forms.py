@@ -1,7 +1,8 @@
 from django import forms
 from .models import Document
 
+
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ['loader', 'source', 'file', 'year', 'month']
+        fields = ["loader", "source", "file", "year", "month"]
