@@ -13,9 +13,28 @@ class CurrencyAdmin(admin.ModelAdmin):
     list_display = ["currency"]
 
 
+class TransactionInline(admin.TabularInline):  # You can use 'StackedInline' for a different layout
+    model = Transaction
+    extra = 1  # Number of empty forms to display
+    readonly_fields = [
+        'source_checksum',
+        'document',
+        'item_no',
+        'date',
+        'amount',
+        'currency',
+        'info',
+        'sink',
+        'doc'
+        ]
+
+
+
 @admin.register(Sink)
 class SinkAdmin(admin.ModelAdmin):
     list_display = ["name", "sink_type", "budget_fmt", "spending_fmt", "diff_fmt"]
+
+    inlines = [TransactionInline]
 
     class Media:
         css = {
@@ -61,7 +80,8 @@ class LoaderAdmin(admin.ModelAdmin):
 class TransactionAdmin(admin.ModelAdmin):
     list_display = ["document", "item_no", "date", "amount", "currency", "info", "sink"]
     list_editable = ["sink"]
-    list_filter = ["date", "document", "currency", "info", "sink"]
+    list_filter = ["date", "document", "currency", "sink"]
+    search_fields = ["source_checksum", "info"]
 
 
 @admin.register(Document)
